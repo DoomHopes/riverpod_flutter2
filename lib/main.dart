@@ -7,6 +7,16 @@ void main() {
 
 final greatingProvider = Provider((ref) => 'Helo Riverpod');
 
+class IncrementNotifier extends ChangeNotifier {
+  int _value = 0;
+  int get value => _value;
+
+  void increment() {
+    _value += 1;
+    notifyListeners();
+  }
+}
+
 /*class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
