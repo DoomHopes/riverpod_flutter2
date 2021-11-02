@@ -5,8 +5,6 @@ void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-final greatingProvider = Provider((ref) => 'Helo Riverpod');
-
 class IncrementNotifier extends ChangeNotifier {
   int _value = 0;
   int get value => _value;
@@ -16,6 +14,9 @@ class IncrementNotifier extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+//final greatingProvider = Provider((ref) => 'Helo Riverpod');
+final incrementProvider = ChangeNotifierProvider((ref) => IncrementNotifier());
 
 /*class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class IncrementNotifier extends ChangeNotifier {
   }
 }*/
 
-class MyApp extends StatelessWidget {
+/*class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -62,6 +63,38 @@ class MyApp extends StatelessWidget {
               return Text(greating);
             },
           ),
+        ),
+      ),
+    );
+  }
+}*/
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Riverpod',
+      home: Scaffold(
+        body: Center(
+          child: Consumer(
+            builder: (context, watch, child) {
+              final incrementNotifier = watch(incrementProvider);
+              return Text(
+                incrementNotifier.value.toString(),
+                style: const TextStyle(
+                  fontSize: 25,
+                ),
+              );
+            },
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            context.read(incrementProvider).increment();
+          },
+          child: const Icon(Icons.add),
         ),
       ),
     );
