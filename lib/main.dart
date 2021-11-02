@@ -7,7 +7,7 @@ void main() {
 
 final greatingProvider = Provider((ref) => 'Helo Riverpod');
 
-class MyApp extends ConsumerWidget {
+/*class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -25,6 +25,34 @@ class MyApp extends ConsumerWidget {
           centerTitle: true,
         ),
         body: Center(child: Text(greating)),
+      ),
+    );
+  }
+}*/
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Riverpod'),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: Consumer(
+            builder: (context, watch, child) {
+              final greating = watch(greatingProvider);
+              return Text(greating);
+            },
+          ),
+        ),
       ),
     );
   }
